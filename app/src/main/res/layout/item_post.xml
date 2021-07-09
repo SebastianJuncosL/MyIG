@@ -14,10 +14,17 @@
         android:text="User"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Timestamp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
     <ImageView
         android:id="@+id/ivPost"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -25,5 +32,6 @@
         android:id="@+id/tvDesc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Description" />
+        android:text="Description"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 </LinearLayout>
