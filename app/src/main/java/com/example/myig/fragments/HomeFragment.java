@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.myig.Post;
 import com.example.myig.PostsAdapter;
@@ -33,6 +34,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvPosts;
     private PostsAdapter adapter;
     private List<Post> allPosts;
+    private SwipeRefreshLayout swipeContainer;
 
     @Nullable
     @Override
@@ -46,10 +48,25 @@ public class HomeFragment extends Fragment {
         rvPosts = view.findViewById(R.id.rvPosts);
         allPosts = new ArrayList<>();
         adapter = new PostsAdapter(getContext(), allPosts);
-
-
         rvPosts.setAdapter(adapter);
         rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                queryPost();
+                // Make sure you call
+                swipeContainer.setRefreshing(false);
+                // once the network request has completed successfully
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
         queryPost();
     }
