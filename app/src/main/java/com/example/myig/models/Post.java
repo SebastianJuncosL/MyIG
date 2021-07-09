@@ -1,4 +1,4 @@
-package com.example.myig;
+package com.example.myig.models;
 
 import android.util.Log;
 

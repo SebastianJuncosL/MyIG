@@ -1,7 +1,7 @@
-package com.example.myig;
+package com.example.myig.adapters;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.myig.DetailedPostActivity;
+import com.example.myig.R;
+import com.example.myig.models.Post;
 import com.parse.ParseFile;
+
+import org.parceler.Parcels;
 
 import java.util.Date;
 import java.util.List;
@@ -36,7 +41,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull PostsAdapter.ViewHolder holder, int position) {
+        // Get the post at the passed in posititon
         Post post = posts.get(position);
+        // Bind movie data into the view holder
         holder.bind(post);
     }
 
@@ -57,7 +64,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView tvUser;
         private ImageView ivPost;
@@ -72,6 +79,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ivPost = itemView.findViewById(R.id.ivPost);
             tvDesc = itemView.findViewById(R.id.tvDesc);
             tvTime = itemView.findViewById(R.id.tvTime);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Post post) {
@@ -85,6 +93,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             createdAt = post.getCreatedAt();
             timeAgo = post.calculateTimeAgo(createdAt);
             tvTime.setText(timeAgo);
+        }
+
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            if(position != RecyclerView.NO_POSITION){
+                Post post = posts.get(position);
+                Intent intent = new Intent(context, DetailedPostActivity.class);
+                intent.putExtra(Post.class.getSimpleName(), Parcels.wrap(post));
+                context.startActivity(intent);
+            }
         }
 
     }

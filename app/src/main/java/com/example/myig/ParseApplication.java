@@ -2,6 +2,7 @@ package com.example.myig;
 
 import android.app.Application;
 
+import com.example.myig.models.Post;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
